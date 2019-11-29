@@ -59,17 +59,19 @@ label = filtered_data['num'].astype(bool).astype(int).values.tolist()       # pr
 
 # Define which parameters to be used in training as x
 # uncomment row below for training will all parameters
-x = np.transpose([age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal])
+x = np.transpose([age,sex,cp,trestbps,chol,restecg,exang])
+x = StandardScaler().fit_transform(x)  # normalization
 #x = np.transpose([age,sex,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope])
 # Define class to predict, here binary, to y
 y = np.transpose([label])
 
-
+plt.hist(age)
+plt.show()
 names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
          "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
          "Naive Bayes", "QDA"]
 classifiers = [
-    KNeighborsClassifier(3),
+    KNeighborsClassifier(16),
     SVC(kernel="linear", C=0.025),
     SVC(gamma=2, C=1),
     GaussianProcessClassifier(1.0 * RBF(1.0)),
@@ -79,10 +81,11 @@ classifiers = [
     AdaBoostClassifier(),
     GaussianNB(),
     QuadraticDiscriminantAnalysis()]
-
+print('-----------------------------'+'\n'+'Training initialized...'+'\n'+'-----------------------------')
 for name, clf in zip(names, classifiers):
     # Define number of folds in cross-validation to c
     c=10
     sc = cross_validate(clf, x, y.ravel(), cv=c)
     score = sum(sc['test_score'])/c
     print(str(name)+': '+str(score))
+print('-----------------------------'+'\n'+'Training complete.'+'\n'+'-----------------------------')
