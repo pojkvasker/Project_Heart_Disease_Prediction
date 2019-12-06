@@ -75,10 +75,10 @@ class App(QWidget):
         if cols != 14:
             print("Wrong numbers of columns")
         else:
-            
-            data = data_tmp.to_numpy()
-            print(data)
-                
+
+            tuple_ = [tuple(x) for x in data_tmp.values]        
+            print(tuple_)
+
             #try:
             #    with self.connection.cursor() as cursor:
             #        sql = "INSERT INTO profiles (`age`, `sex`, `cp`, `trestbps`, `chol`, `fbs`, `restecg`, `thalach`, `exang`, `oldpeak`, `slope`, `ca`, `thal`, `num`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
