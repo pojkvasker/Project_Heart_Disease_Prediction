@@ -35,12 +35,12 @@ data_sw = pd.read_csv('processed.switzerland_2.txt',\
 data_va = pd.read_csv('processed.va_2.txt',\
                       sep=",", header=None)
 # Merge all datasets into one dataset
-data = pd.concat([data_cl,data_hu,data_sw,data_va]).replace('?', np.nan).reset_index(drop=True)
+data_cl = pd.concat([data_cl,data_hu,data_sw,data_va]).replace('?', np.nan).reset_index(drop=True)
 # Column names, according to the web source
-data.columns = ['age','sex','cp','trestbps','chol','fbs','restecg',\
+data_cl.columns = ['age','sex','cp','trestbps','chol','fbs','restecg',\
                 'thalach','exang','oldpeak','slope','ca','thal','num']
 # Filter out datapoints with missing values
-filtered_data = data.dropna()
+filtered_data = data_cl.dropna()
 # Define parameters used in training
 age = filtered_data['age'].astype(float).values.tolist() 
 sex = filtered_data['sex'].astype(bool).astype(int).values.tolist()
@@ -57,16 +57,16 @@ ca = filtered_data['ca'].astype(float).values.tolist()                      # nu
 thal = filtered_data['thal'].astype(float).values.tolist()                  # 3 = normal; 6 = fixed defect; 7 = reversable defect
 label = filtered_data['num'].astype(bool).astype(int).values.tolist()       # prediction class label
 
+
+
 # Define which parameters to be used in training as x
 # uncomment row below for training will all parameters
-x = np.transpose([age,sex,cp,trestbps,chol,restecg,exang])
+x = np.transpose([age,sex,chol,trestbps,restecg,exang])
 x = StandardScaler().fit_transform(x)  # normalization
 #x = np.transpose([age,sex,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope])
 # Define class to predict, here binary, to y
 y = np.transpose([label])
 
-plt.hist(age)
-plt.show()
 names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
          "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
          "Naive Bayes", "QDA"]
