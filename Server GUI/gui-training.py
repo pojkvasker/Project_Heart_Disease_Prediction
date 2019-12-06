@@ -2,11 +2,19 @@ import sys
 import os
 import numpy as np
 import pandas as pd
+#import pymysql
 from PyQt5.QtWidgets import *
 
 class App(QWidget):
 
     fileName = ""
+
+    #connection = pymysql.connect(
+    #    host = "localhost",
+    #    user = "root",
+    #    password = "",
+    #    db = "pdp",
+    #)
 
     def __init__(self):
         super().__init__()
@@ -45,16 +53,43 @@ class App(QWidget):
             print(fileName_tmp)
             print(fileExtension)
             # Only continue if extension is csv
-            if fileExtension == ".csv":
-                print("CSV")
+            if fileExtension == ".txt":
+                print("txt")
+                # Use that filename
                 self.fileName = fileName_tmp
-                self.parseCSV_()
+                # Start adding data to training db
+                self.addData()
             else:
-                print("Not CSV!")
+                print("Not txt!")
 
-    def parseCSV_(self):
-        print(self.fileName)
+    def addData(self):
+        # Read from txt file
+        data_tmp = pd.read_csv(self.fileName, sep = ",", header=None)
+        data_tmp.columns = ['age', 'sex','cp','trestbps','chol','fbs','restecg',\
+                'thalach','exang','oldpeak','slope','ca','thal','num']
+        print(data_tmp)
+        print(data_tmp.shape)
 
+        rows, cols = data_tmp.shape
+        
+        if cols != 14:
+            print("Wrong numbers of columns")
+        else:
+            
+            data = data_tmp.to_numpy()
+            print(data)
+                
+            #try:
+            #    with self.connection.cursor() as cursor:
+            #        sql = "INSERT INTO profiles (`age`, `sex`, `cp`, `trestbps`, `chol`, `fbs`, `restecg`, `thalach`, `exang`, `oldpeak`, `slope`, `ca`, `thal`, `num`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            #    try:
+            #        cursor.executemany(sql,(age,sex,bp,chol,ecg,exang,id,pred,prob,timestamp))
+            #        print("Added values to DB.")
+            #    except:
+            #        print("Did not work!")
+            #    self.connection.commit()
+            #finally:
+            #   self.connection.close()
 
 
 if __name__ == '__main__':
