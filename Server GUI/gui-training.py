@@ -79,6 +79,10 @@ class App(QWidget):
             tuple_ = [tuple(x) for x in data_tmp.values]        
             print(tuple_)
 
+            # (data_tmp[0]['age'], data_tmp[0]['sex'], data_tmp[0]['cp'], data_tmp[0]['trestbps'], data_tmp[0]['chol'], data_tmp[0]['fbs'], data_tmp[0]['restecg'], data_tmp[0]['thalach'], data_tmp[0]['exang'], data_tmp[0]['oldpeak'], data_tmp[0]['slope'], data_tmp[0]['ca'], data_tmp[0]['thal'], data_tmp[0]['num'])
+            # sql = "INSERT INTO profiles (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, num) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+
             #try:
             #    with self.connection.cursor() as cursor:
             #        sql = "INSERT INTO profiles (`age`, `sex`, `cp`, `trestbps`, `chol`, `fbs`, `restecg`, `thalach`, `exang`, `oldpeak`, `slope`, `ca`, `thal`, `num`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
