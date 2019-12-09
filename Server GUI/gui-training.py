@@ -47,7 +47,7 @@ class App(QWidget):
         id, okPressed = QInputDialog.getInt(self, "Get integer","Percentage:", 0, 0, 1000000, 1)
         if okPressed:
             print(id)
-            self.readDataID(id)
+            self.readDataID(self,id)
 
     def readDataID(self,id):
         # Read specific profile from db
@@ -74,7 +74,13 @@ class App(QWidget):
         prob = [i[6] for i in db_data]
         timestamp = [i[7] for i in db_data]
 
-        print(age)
+        data_read = {'Age': age, 'Sex': sex, 'Bp': bp, 'Chol': chol, 'Ecg': ecg, 'Prediction': pred, 'Probability': prob, 'Times': timestamp}
+        print(data_read)
+
+        # Write to excel file
+        fileName = "Patient_{0}.xlsx".format(str(id))
+        data_read.to_excel(fileName)
+
 
     def openFileNameDialog(self):
         #options = QFileDialog.Options()

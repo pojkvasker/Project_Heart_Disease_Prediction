@@ -53,8 +53,6 @@ x = np.transpose([age,sex,chol,trestbps,restecg,exang])
 # Define y as class label
 y = np.transpose([label])
 
-
-
 # Choice of model, here GP with Matern as kernel
 kernel = 1.0 * Matern(length_scale=1.0,length_scale_bounds=(1e-1,10.0),nu=1.5)
 model = GaussianProcessClassifier(kernel=kernel)
