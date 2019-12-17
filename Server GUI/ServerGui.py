@@ -1,40 +1,46 @@
 import sys
-import pymysql.cursors
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
-class Ui(object):
+class App(QWidget):
 
-    def sql_stuff(self):
-        connection = pymysql.connect(
-            host = "localhost",
-            user = "root",
-            password = "",
-            db = "pdp",)
-        cursor = connection.cursor() 
+    def __init__(self):
+        super().__init__()
+        self.title = 'Login'
+        self.top = 100
+        self.left = 100
+        self.width = 350
+        self.height = 700
+        self.Log()
 
-        query1 = ("""SELECT age, sex, bp, chol, ecg, id, pred, prob, timestamp FROM profiles""")
+    def Log(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.top, self.left, self.height, self.width)
+
+        btn = QPushButton('Search profile', self)
+        btn.move(100, 100)
         
-        cursor.execute(query1)
-        self.result = []
-        fetchq = cursor.fetchall()
-        print(fetchq)
-        self.result.append(fetchq)
-        return self.result
-
-        self.listWidget.addItem(self.result)
+        self.host = QLineEdit(self)
+        self.host.setPlaceholderText('id')
+        self.host.move(100, 150)
     
-    
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(889, 692)
-        Form.setStyleSheet("background-color: rgb(255, 255, 255);")
+        btn = QPushButton('Add to database', self)
+        btn.move(250, 100)
+        
+        btn = QPushButton('Update prediction', self)
+        btn.move(400, 100)
+        #btn = clicked.connect(self.getModel)
 
+        labelA = QLabel(self)
+        labelA.setText('No model info..')
+        labelA.move(400, 150)
+        
+        self.show()
+    #def getModel(self):
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui()
-    ui.setupUi(Form)
-    Form.show()
+   
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
     sys.exit(app.exec_())
