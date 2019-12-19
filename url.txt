@@ -1,2 +1,4 @@
-http://878e7e31.ngrok.io/Working_Prototype_1.0/http_interface.php?Age=35&Sex=1&BP=200&Chol=300&Ecg=0&Exang=0&Id=951127
+http://5b4a4727.ngrok.io/Working_Prototype_1.0/http_interface.php?Age=35&Sex=1&BP=200&Chol=300&Ecg=0&Exang=0&Id=951127
+
+http://5b4a4727.ngrok.io/Working_Prototype_Dwnld_ML_1.0/http_interface_dwnld.php
 
